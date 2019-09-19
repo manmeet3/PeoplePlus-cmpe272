@@ -2,15 +2,20 @@ Group:   Blue Hats
 Project: PeoplePlus
 Class:   Cmpe 272
 
-Tool versions:
-Python: 3.6.8
-pip:    9.0.1
-Django  2.2.5
-PosGreSQL or MySQL?? --> check provided database script compatibility
+--Tool versions:
+Python: 		3.6.8
+pip:    		9.0.1
+Django  		2.2.5
+Djangorestframework	3.10
+MySQL			14.14
+django-simple-sso	0.14.1
 
 Installation:
 1) sudo apt-get install python3 python3-pip
-2) sudo pip3 install Django
+2) sudo pip3 install django djangorestframework
 3) sudo apt-get install mysql-server
 4) Reset root password: https://linuxconfig.org/how-to-reset-root-mysql-password-on-ubuntu-18-04-bionic-beaver-linux
+
+SSO:
+sudo pip install django-simple-sso
 
