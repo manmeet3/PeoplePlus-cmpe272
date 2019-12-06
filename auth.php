@@ -140,6 +140,7 @@ class auth_plugin_oidc extends \auth_plugin_base {
      * Sync roles for this user - usually creator
      *
      * @param $user object user object (without system magic quotes)
+	  #bluehats
      */
     public function sync_roles($user) {
 	$oidc_userinfo =  $this->loginflow->get_userinfo($user->username);
