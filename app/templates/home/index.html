@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block body %}
+<p id="message">
+    PeoplePlus allows you to easily manage your employees' roles,salary grades and department.
+</p>
+<div class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-message">
+                    <h1>PeoplePlus</h1>
+                    <h3>A simple Human Resources Management System</h3>
+                    </ul>
+                    <a href="{{ url_for('home.dashboard') }}" id="in">Login</a>
+                    <a href="{{ url_for('home.dashboard') }}" id="in">Contact Us</a>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

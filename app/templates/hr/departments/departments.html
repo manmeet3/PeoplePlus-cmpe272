@@ -1,0 +1,57 @@
+{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}Departments{% endblock %} {% block body %}
+<tr class="content-section">
+            <td class="inner">
+                <br/> {{ utils.flashed_messages() }}
+                <br/>
+                <h1 style="text-align:center;">Departments</h1>
+                {% if departments %}
+                <hr class="intro-divider">
+                <tr class="center">
+<!--                    <table class="table table-striped table-bordered">-->
+<!--                        <thead>-->
+<!--                            <tr>-->
+<!--                                <th width="15%"> Dept No. </th>-->
+<!--                                <th width="40%"> Name </th>-->
+<!--                                <th width="15%"> Employee Count </th>-->
+<!--                                <th width="15%"> Manager </th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            {% for department in departments %}-->
+<!--                            <ul>-->
+<!--                                <li> <a href="{{url_for('hr.list_employee_dept', department=department[0])}}"> {{ department[0] }}</a></li>-->
+<!--                                <li> {{ department[1] }} </li>-->
+<!--                                <li> {{ department[2] }} </li>-->
+<!--                            {% endfor %}-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+
+
+                    <div style="padding-left:100px">
+                    <table border="1" width="50%" class=""center>
+                        <tr>
+                            <td>Unit Number</td>
+                            <td>Name</td>
+                            <td>Employee Count</td>
+
+                        </tr>
+                         {% for department in departments %}
+                        <tr>
+                        <td> <a class="table-row" style="display:table-row;" href="{{url_for('hr.list_employee_dept', department=department[0])}}">
+                           {{ department[0] }} </a> </td>
+                            <td>{{ department[1] }} </td>
+                            <td>{{ department[2] }} </td>
+                        </tr>
+                        {% endfor %}
+
+                </table>
+                    </div>
+                <div style="text-align: center">
+                    {% else %}
+                    <div style="text-align: center">
+                        <h3> No departments have been added. </h3>
+                        <hr class="intro-divider"> {% endif %}
+                    </div>
+                </div>
+    </div>
+    {% endblock %}

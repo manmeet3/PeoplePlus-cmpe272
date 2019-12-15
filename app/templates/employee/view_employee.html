@@ -1,0 +1,67 @@
+{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}Employees{% endblock %} {% block body %}
+
+<div class="content-section">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <br/> {{ utils.flashed_messages() }}
+                <br/>
+
+                <h1 style="text-align:center;">Employees</h1>
+                {% if employee %}
+                <hr class="intro-divider">
+                <div class="center">
+                    <table border="1"style="padding-left:50px">
+
+                            <tr>
+                                <td> Employee number </td>
+
+                                <td>  Name </td>
+                                <td>  Hire date </td>
+                                <td>  Date of Birth </td>
+
+                                <td> Gender </td>
+                                <td > Title </td>
+                                <td> Salary </td>
+
+                                <td > Department </td>
+                                <td > Manager </td>
+                            </tr>
+
+
+                            <tr >
+                                    <td >{{ employee[0] }} </td>
+
+                                    <td >{{ employee[1] }} {{ employee[2] }} </td>
+                                <td >
+                                    {{ employee[3] }}
+                                </td>
+                               <td>
+                                    {{ employee[4] }}
+                               </td>
+                               <td>
+                                    {{ employee[5] }}
+                               </td>
+                                <td>
+                                    {{ employee[6] }}
+                                </td>
+                                  <td>
+                                    {{ employee[7] }}
+                                  </td>
+                                  <td>
+                                    {{ employee[8] }}
+                                  </td>
+                                  <td>
+                                    {{ employee[9] }}
+                                  </td>
+                            </tr>
+                    </table>
+                </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

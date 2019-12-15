@@ -1,0 +1,21 @@
+{% import "bootstrap/wtf.html" as wtf %} {% extends "base.html" %} {% block title %} {% if add_employee %} Add Employee {% else %} Edit Employee {% endif %} {% endblock %} {% block body %}
+<div class="content-section">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <div class="center">
+                    {% if add_employee %}
+                    <h1>Add Employee</h1>
+                    {% else %}
+                    <h1>Edit Employee</h1>
+                    {% endif %}
+                    <br/> {{ wtf.quick_form(form) }}
+                </div>
+                <div style="padding-left:10px"><a href="{{url_for('hr.delete_employee', id = form.emp_no.data)}}" class="button"> Terminate</a></div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}Employees{% endblock %} {% block body %}
+
+<td class="content-section">
+    <td class="outer">
+        <td class="middle">
+            <div class="inner">
+                <br/> {{ utils.flashed_messages() }}
+                <br/>
+                <div style="padding-left:10px"><a href="{{url_for('hr.create_employee')}}" class="button">Create Employee</a></div>
+
+
+                <h1 style="text-align:center;">Employees</h1>
+                {% if employees %}
+                    <td class="container">
+
+                 {{ pagination.links }}
+                <hr class="intro-divider">
+                 <div style="padding-left:100px">
+                    <table border="1" width="85%">
+
+                            <tr>
+                                <td>  Name </td>
+                                <td> Gender </td>
+                                <td> Salary </td>
+                                <td> Title </td>
+                                <td> Department </td>
+                                <td> Manager </td>
+                            </tr>
+
+                            {% for employee in employees %}
+<!--                      <div>{{ loop.index + (page - 1) * per_page }}</div>-->
+                            <tr>
+                            <td> <a href="{{url_for('hr.view_employee', empId=employee[0])}}">
+
+                                {{ employee[1] }} {{ employee[2] }} </a> </td>
+                                <td >
+                                    {{ employee[3] }}
+                                </td>
+                               <td>
+                                    {{ employee[4] }}
+                               </td>
+                               <td >
+                                    {{ employee[5] }}
+                               </td>
+                                <td >
+                                    {{ employee[6] }}
+                                </td>
+                                  <td>
+                                    {{ employee[7] }}
+                                  </td>
+                                </tr>
+
+                            {% endfor %}
+                    </table>
+                </div>
+ {{ pagination.links }}
+    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

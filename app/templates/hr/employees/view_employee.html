@@ -1,0 +1,84 @@
+{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}Employees{% endblock %} {% block body %}
+
+<div class="content-section">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <br/> {{ utils.flashed_messages() }}
+                <br/>
+                <div style="padding-left:10px"><a href="{{url_for('hr.edit_employee', id=employee[0])}}" class="button">Edit Employee</a></div>
+
+                <h1 style="text-align:center;">Employees</h1>
+                {% if employee %}
+                <hr class="intro-divider">
+                <div  style="padding-left:100px">
+                    <table border="1" width="85%" cellpadding="1">
+
+                            <tr>
+                                <td>
+                                Employee number </td>
+
+                                <td>  Name </td>
+                                <td> Hire date </td>
+                                <td>  Date of Birth</td>
+
+                               <td>Gender</td>
+                               <td>Title </td>
+                               <td>Salary </td>
+
+                                <td> Department </td>
+                              <td>Manager</td>
+                            </tr>
+
+
+<!--                            <a class="table-row" style="display:table-row;" href="{{url_for('hr.edit_employee', empId=employee[0])}}">-->
+<!--                                    <div style="display:table-cell">{{ employee[0] }} </div>-->
+
+<!--                                    <div style="display:table-cell">{{ employee[1] }} {{ employee[2] }} </div>-->
+<!--                                <div style="display:table-cell">-->
+<!--                                    {{ employee[3] }}-->
+<!--                                </div>-->
+<!--                               <div style="display:table-cell">-->
+<!--                                    {{ employee[4] }}-->
+<!--                               </div>-->
+<!--                               <div style="display:table-cell">-->
+<!--                                    {{ employee[5] }}-->
+<!--                               </div>-->
+<!--                                <div style="display:table-cell">-->
+<!--                                    {{ employee[6] }}-->
+<!--                                </div>-->
+<!--                                  <div style="display:table-cell">-->
+<!--                                    {{ employee[7] }}-->
+<!--                                  </div>-->
+<!--                                  <div style="display:table-cell">-->
+<!--                                    {{ employee[8] }}-->
+<!--                                  </div>-->
+<!--                                  <div style="display:table-cell">-->
+<!--                                    {{ employee[9] }}-->
+<!--                                  </div>-->
+<!--                            </a>-->
+    <tr>
+        <td><a href="{{url_for('hr.edit_employee', empId=employee[0])}}">{{ employee[0] }}</a></td>
+        <td>{{ employee[1] }} {{ employee[2] }}</td>
+        <td>{{ employee[3] }}</td>
+        <td>{{ employee[4] }}</td>
+        <td>{{ employee[5] }}</td>
+        <td>{{ employee[6] }}</td>
+        <td>{{ employee[7] }}</td>
+        <td>{{ employee[8] }}</td>
+        <td>{{ employee[9] }}</td>
+
+    </tr>
+</table>
+
+
+                    </div>
+                </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
