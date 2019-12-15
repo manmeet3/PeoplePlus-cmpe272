@@ -1,4 +1,0 @@
-Flask
-itsdangerous
-oauth2client
-six
