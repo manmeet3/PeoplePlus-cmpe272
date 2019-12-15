@@ -1,0 +1,1 @@
+2019-12-10 06:24:06,459 WARN  [org.keycloak.events] (default task-80) type=REFRESH_TOKEN_ERROR, realmId=BlueHats, clientId=moodle_client, userId=null, ipAddress=172.31.6.117, error=invalid_token, grant_type=refresh_token, client_auth_method=client-secret

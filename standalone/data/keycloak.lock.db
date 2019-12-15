@@ -1,0 +1,6 @@
+#FileLock
+#Fri Dec 06 22:53:45 UTC 2019
+hostName=ip-172-31-11-109.us-west-1.compute.internal
+id=16edd6b445bc4735a537bb4d34f65971adc05ae8e09
+method=file
+server=172.31.11.109\:37099
