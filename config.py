@@ -28,9 +28,18 @@ class ProductionConfig(Config):
     DEBUG = False
 
 
+class TestingConfig(Config):
+    """
+    Testing configurations
+    """
+
+    TESTING = True
+
+
 app_config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
+    'testing': TestingConfig,
     # 'SECRET_KEY': 'u\x91\xcf\xfa\x0c\xb9\x95\xe3t\xba2K\x7f\xfd\xca\xa3\x9f\x90\x88\xb8\xee\xa4\xd6\xe4',
     'TESTING': True,
     'KEYCLOAK_URL':'http://localhost:8080/auth/',
@@ -46,3 +55,4 @@ app_config = {
     # 'OIDC_VALID_ISSUERS': ['http://localhost:8080/auth/realms/peopleplus'],
     # 'OIDC_OPENID_REALM': 'http://localhost:5000/oidc_callback'
 }
+
