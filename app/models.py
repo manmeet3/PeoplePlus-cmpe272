@@ -1,7 +1,8 @@
 '''
 @ Manmeet Singh
 @ Nov 26, 2019
-@ Cmpe 272 db mapping
+@ Description: The below classes serve as the model layer for ORM mapping from MySQL database to
+python objects.
 '''
 
 from flask_login import UserMixin
@@ -12,6 +13,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from app import db
 
+'''
+Map Department Table
+'''
 class Department(db.Model):
     __tablename__ = 'departments'
 
@@ -23,6 +27,9 @@ class Department(db.Model):
     def __repr__(self):
         return '{}'.format(self.dept_name)
 
+'''
+Map Department and Employee relation table
+'''
 class DeptEmp(db.Model):
     __tablename__ = 'dept_emp'
 
@@ -35,6 +42,9 @@ class DeptEmp(db.Model):
     def __repr__(self):
         return '{}'.format(self.emp_no)
 
+'''
+The below table maps Departments with their manager's employee id
+'''
 class DeptMgr(db.Model):
     __tablename__ = 'dept_manager'
 
@@ -47,6 +57,9 @@ class DeptMgr(db.Model):
     def __repr__(self):
         return '{}'.format(self.emp_no)
 
+'''
+The below table maps Employee to a python object
+'''
 class Employee(db.Model):
     __tablename__ = 'employees'
 
@@ -63,6 +76,9 @@ class Employee(db.Model):
     def __repr__(self):
         return '<Employee: {}>'.format(self.first_name)
 
+'''
+The below table maps emp id with a salary value
+'''
 class Salary(db.Model):
     __tablename__ = 'salaries'
 
@@ -74,6 +90,9 @@ class Salary(db.Model):
     def __repr__(self):
         return '{}'.format(self.salary)
 
+'''
+The below maps the title of an employee with emp id
+'''
 class Title(db.Model):
     __tablename__ = 'titles'
 
@@ -84,105 +103,3 @@ class Title(db.Model):
     employee=relationship("Employee", back_populates="title")
     def __repr__(self):
         return '{}'.format(self.title)
-
-# ===============================================================
-
-# class Employee(UserMixin, db.Model):
-#     """
-#     Create an Employee table
-#     """
-
-#     # Ensures table will be named in plural and not in singular
-#     # as is the name of the model
-#     __tablename__ = 'employees'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     email = db.Column(db.String(60), index=True, unique=True)
-#     username = db.Column(db.String(60), index=True, unique=True)
-#     first_name = db.Column(db.String(60), index=True)
-#     last_name = db.Column(db.String(60), index=True)
-#     password_hash = db.Column(db.String(128))
-#     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
-#     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-#     grade_id = db.Column(db.Integer, db.ForeignKey('grades.id'))
-#     is_admin = db.Column(db.Boolean, default=False)
-
-#     @property
-#     def password(self):
-#         """
-#         Prevent pasword from being accessed
-#         """
-#         raise AttributeError('password is not a readable attribute.')
-
-#     @password.setter
-#     def password(self, password):
-#         """
-#         Set password to a hashed password
-#         """
-#         self.password_hash = generate_password_hash(password)
-
-#     def verifypassword(self, password):
-#         """
-#         Check if hashed password matches actual password
-#         """
-#         return check_password_hash(self.password_hash, password)
-
-#     def __repr__(self):
-#         return '<Employee: {}>'.format(self.username)
-
-
-# # Set up user_loader
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return Employee.query.get(int(user_id))
-
-
-# class Department(db.Model):
-#     """
-#     Create a Department table
-#     """
-
-#     __tablename__ = 'departments'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(60), unique=True)
-#     description = db.Column(db.String(200))
-#     employees = db.relationship('Employee', backref='department',
-#                                 lazy='dynamic')
-
-#     def __repr__(self):
-#         return '{}'.format(self.name)
-
-
-# class Role(db.Model):
-#     """
-#     Create a Role table
-#     """
-
-#     __tablename__ = 'roles'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(60), unique=True)
-#     description = db.Column(db.String(200))
-#     employees = db.relationship('Employee', backref='role',
-#                                 lazy='dynamic')
-
-#     def __repr__(self):
-#         return '{}'.format(self.name)
-
-
-# class Grade(db.Model):
-#     """
-#     Create a Pay Grade table
-#     """
-
-#     __tablename__ = 'grades'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     paygrade = db.Column(db.String(60), unique=True)
-#     amount = db.Column(db.String(200))
-#     employees = db.relationship('Employee', backref='grade',
-#                                 lazy='dynamic')
-
-#     def __repr__(self):
-#         return '{}'.format(self.paygrade)

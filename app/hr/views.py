@@ -4,9 +4,7 @@ from flask import abort, flash, redirect, render_template, url_for, request, g
 from flask_login import current_user, login_required
 from datetime import date
 
-#from flask_sqlalchemy import Pagination
 from flask_paginate import Pagination, get_page_args
-#from keycloak.aio import realm
 from pkg_resources import resource_stream
 from sqlalchemy.dialects.mysql import json
 from keycloak_wrapper import access_token
@@ -15,7 +13,6 @@ from keycloak import KeycloakAdmin
 from keycloak_wrapper import user_attributes
 
 from . import hr
-#from forms import DepartmentForm, RoleForm, EmployeeAssignForm, GradeForm
 from .forms import EmployeeForm
 from .. import db
 from ..models import Department, DeptEmp, DeptMgr, Employee, Salary, Title
@@ -80,23 +77,6 @@ def list_departments():
 
     return render_template('hr/departments/departments.html',
                            departments=depts, title="Departments")
-
-
-# @hr.route('/employees')
-# @oidc.require_login
-# def list_employees():
-#     """
-#     List all employees
-#     """
-#     today=str(date.today())
-#     emp = Employee.query.first()
-#     employees=[]
-#     salary=emp.salary.filter(Salary.to_date >= today).all()
-#     title=emp.title.filter(Title.to_date >= today).all()
-#     emp1=[emp.first_name, emp.last_name, emp.gender, salary, title]
-#     employees.append(emp1)
-#     return render_template('hr/employees/employees.html',
-#                            employees=employees, title='Employees')
 
 
 @hr.route('/deptEmployees', methods=['GET'])
@@ -261,32 +241,10 @@ def edit_employee():
         employee.last_name = form.last_name.data
 
         deptEmp.dept_no = form.department.data
-        #deptEmp.emp_no = form.emp_no.data
-        #deptEmp.to_date = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
         salary.salary = form.salary.data
         title.title = form.title.data
-        print('old : ',deptEmp.dept_no, deptEmp.emp_no)
-        print('new : ', form.emp_no.data, form.department.data)
-
-
-        # employee = Employee(emp_no=form.emp_no.data,first_name=form.first_name.data, last_name=form.last_name.data,
-        #                     birth_date=form.birth_date.data, gender=form.gender.data,
-        #                     hire_date=form.hire_date.data)
-
-        # dept = DeptEmp(emp_no=form.emp_no.data, dept_no=form.department.data, from_date=form.hire_date.data, to_date='9999-01-01')
-        # salary = Salary(emp_no=form.emp_no.data, salary=form.salary.data, from_date=form.hire_date.data, to_date='9999-01-01')
-        # title = Title(emp_no=form.emp_no.data, title=form.title.data, from_date=form.hire_date.data, to_date='9999-01-01')
 
         db.session.commit()
-        # dept = DeptEmp(emp_no = form.emp_no.data, dept_no=form.department.data,from_date=now.strftime("%Y-%m-%d"),to_date='9999-01-01')
-        #
-        # # db.session.add(employee)
-        # db.session.add(dept)
-        # # db.session.add(salary)
-        # # db.session.add(title)
-        #
-        # db.session.flush()
-        # db.session.commit()
         flash('You have successfully edited the Employee information.')
         return redirect(url_for('hr.list_employee_dept', department=form.department.data))
 
@@ -377,26 +335,6 @@ Create keycloak account for new employee
 def create_emp_keycloak(employee):
     headers = {'Content-type': 'application/json'}
     print('config : ',app_config['CLIENT_SECRET'])
-    # token = access_token(app_config['KEYCLOAK_URL'],
-    #                      app_config['REALM_NAME'],
-    #                      app_config['CLIENT_NAME'],
-    #                      app_config['CLIENT_SECRET'],
-    #                      'bluehats_user', #app_config['USERNAME']app_config['PASSWORD']
-    #                      'password')
-    # print(token)
-    # realm = KeycloakRealm(server_url='http://localhost:8080', realm_name='BlueHats')
-    #admin_client = realm.admin
-
-    # users = realm.admin.realms.by_name('BlueHats').users
-    # print(users)
-
-    #t = access_token('http://localhost:8080','BlueHats','emp_client','secret','bluehats_admin','password')
-
-    # keycloak_openid = KeycloakOpenID(server_url=app_config['KEYCLOAK_URL'],
-    #                                  client_id=app_config['CLIENT_NAME'],
-    #                                  realm_name= app_config['REALM_NAME'],
-    #                                  client_secret_key=app_config['CLIENT_SECRET'])
-    # token = keycloak_openid.token(app_config['USERNAME'], app_config['PASSWORD'])
     keycloak_admin = KeycloakAdmin(server_url=app_config['KEYCLOAK_URL'],
                                    username=app_config['USERNAME'],
                                    password=app_config['PASSWORD'],
@@ -414,329 +352,4 @@ def create_emp_keycloak(employee):
                                            "lastName": employee[2],
                                            "credentials": [{"value": "welcome123","type": "password",}],
                                            "attributes": {"emp_id": employee[0]}})
-    #attrs = user_attributes("http://localhost:8080/", app_config['REALM_NAME'], "http://localhost:8080/", ADMIN_REALM_TOKEN, USERNAME)
-
-    print('success')
-
-# @hr.route('/departments/add', methods=['GET', 'POST'])
-# @oidc.require_login
-# def add_department():
-#     add_department = True
-#     form = DepartmentForm()
-#     if form.validate_on_submit():
-#         department = Department(name=form.name.data,
-#                                 description=form.description.data)
-#         try:
-#             # add department to the database
-#             db.session.add(department)
-#             db.session.commit()
-#             flash('You have successfully added a new department.')
-#         except:
-#             # in case department name already exists
-#             flash('Error: department name already exists.')
-
-#         # redirect to departments page
-#         return redirect(url_for('hr.list_departments'))
-
-#     # load department template
-#     return render_template('hr/departments/department.html', action="Add",
-#                            add_department=add_department, form=form,
-#                            title="Add Department")
-
-
-# @hr.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def edit_department(id):
-#     """
-#     Edit a department
-#     """
-    
-
-#     add_department = False
-
-#     department = Department.query.get_or_404(id)
-#     form = DepartmentForm(obj=department)
-#     if form.validate_on_submit():
-#         department.name = form.name.data
-#         department.description = form.description.data
-#         db.session.commit()
-#         flash('You have successfully edited the department.')
-
-#         # redirect to the departments page
-#         return redirect(url_for('hr.list_departments'))
-
-#     form.description.data = department.description
-#     form.name.data = department.name
-#     return render_template('hr/departments/department.html', action="Edit",
-#                            add_department=add_department, form=form,
-#                            department=department, title="Edit Department")
-
-
-# @hr.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def delete_department(id):
-#     """
-#     Delete a department from the database
-#     """
-    
-
-#     department = Department.query.get_or_404(id)
-#     db.session.delete(department)
-#     db.session.commit()
-#     flash('You have successfully deleted the department.')
-
-#     # redirect to the departments page
-#     return redirect(url_for('hr.list_departments'))
-
-#     return render_template(title="Delete Department")
-
-# ------------------------------------------------------------------------
-
-
-
-
-# @hr.route('/employees/assign/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def assign_employee(id):
-#     """
-#     Assign a department, a paygrade and a role to an employee
-#     """
-    
-
-#     employee = Employee.query.get_or_404(id)
-
-#     # prevent admin from being assigned a department or role
-#     if employee.is_admin:
-#         abort(403)
-
-#     form = EmployeeAssignForm(obj=employee)
-#     if form.validate_on_submit():
-#         employee.department = form.department.data
-#         employee.role = form.role.data
-#         employee.grade = form.grade.data
-#         db.session.add(employee)
-#         db.session.commit()
-#         flash('You have successfully assigned a department, paygrade and a role.')
-
-#         # redirect to the roles page
-#         return redirect(url_for('admin.list_employees'))
-
-#     return render_template('hr/employees/employee.html',
-#                            employee=employee, form=form,
-#                            title='Assign Employee')
-
-
-# @hr.route('/employees/delete/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def delete_employee(id):
-#     """
-#     Assign a department and a role to an employee
-#     """
-    
-
-#     employee = Employee.query.get_or_404(id)
-
-#     # prevent admin from being assigned a department or role
-#     if employee.is_admin:
-#         abort(403)
-
-#     db.session.delete(employee)
-#     db.session.commit()
-#     flash('You have successfully deleted the account.')
-
-#     # redirect to the roles page
-#     return redirect(url_for('hr.list_employees'))
-
-#     return render_template('hr/employees/employee.html',
-#                            employee=employee, form=form,
-#                            title='Delete Employee')
-
-
-
-
-
-
-# ============================================================================
-# @hr.route('/roles')
-# @oidc.require_login
-# def list_roles():
-    
-#     """
-#     List all roles
-#     """
-#     roles = Role.query.all()
-#     return render_template('hr/roles/roles.html',
-#                            roles=roles, title='Roles')
-
-
-# @hr.route('/roles/add', methods=['GET', 'POST'])
-# @oidc.require_login
-# def add_role():
-#     """
-#     Add a role to the database
-#     """
-    
-
-#     add_role = True
-
-#     form = RoleForm()
-#     if form.validate_on_submit():
-#         role = Role(name=form.name.data,
-#                     description=form.description.data)
-
-#         try:
-#             # add role to the database
-#             db.session.add(role)
-#             db.session.commit()
-#             flash('You have successfully added a new role.')
-#         except:
-#             # in case role name already exists
-#             flash('Error: role name already exists.')
-
-#         # redirect to the roles page
-#         return redirect(url_for('hr.list_roles'))
-
-#     # load role template
-#     return render_template('hr/roles/role.html', add_role=add_role,
-#                            form=form, title='Add Role')
-
-
-# @hr.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def edit_role(id):
-#     """
-#     Edit a role
-#     """
-    
-
-#     add_role = False
-
-#     role = Role.query.get_or_404(id)
-#     form = RoleForm(obj=role)
-#     if form.validate_on_submit():
-#         role.name = form.name.data
-#         role.description = form.description.data
-#         db.session.add(role)
-#         db.session.commit()
-#         flash('You have successfully edited the role.')
-
-#         # redirect to the roles page
-#         return redirect(url_for('hr.list_roles'))
-
-#     form.description.data = role.description
-#     form.name.data = role.name
-#     return render_template('hr/roles/role.html', add_role=add_role,
-#                            form=form, title="Edit Role")
-
-
-# @hr.route('/roles/delete/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def delete_role(id):
-#     """
-#     Delete a role from the database
-#     """
-#     role = Role.query.get_or_404(id)
-#     db.session.delete(role)
-#     db.session.commit()
-#     flash('You have successfully deleted the role.')
-
-#     # redirect to the roles page
-#     return redirect(url_for('hr.list_roles'))
-
-#     return render_template(title="Delete Role")
-
-#==================================================================================
-
-
-#--------------------------------------------------#
-
-
-# @hr.route('/grades')
-# @oidc.require_login
-# def list_grades():
-    
-#     """
-#     List all pay grades
-#     """
-#     grades = Grade.query.all()
-#     return render_template('hr/grades/grades.html',
-#                            grades=grades, title='Grades')
-
-
-# @hr.route('/grades/add', methods=['GET', 'POST'])
-# @oidc.require_login
-# def add_grade():
-#     """
-#     Add a pay grade to the database
-#     """
-    
-
-#     add_grade = True
-
-#     form = GradeForm()
-#     if form.validate_on_submit():
-#         grade = Grade(paygrade=form.paygrade.data,
-#                       amount=form.amount.data)
-
-#         try:
-#             # add role to the database
-#             db.session.add(grade)
-#             db.session.commit()
-#             flash('You have successfully added a new pay grade.')
-#         except:
-#             # in case role name already exists
-#             flash('Error: Pay Grade already exists.')
-
-#         # redirect to the pay grades page
-#         return redirect(url_for('hr.list_grades'))
-
-#     # load role template
-#     return render_template('hr/grades/grade.html', add_grade=add_grade,
-#                            form=form, title='Add Pay Grade')
-
-
-# @hr.route('/grades/edit/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def edit_grade(id):
-#     """
-#     Edit a Pay Grade
-#     """
-    
-
-#     add_grade = False
-
-#     grade = Grade.query.get_or_404(id)
-#     form = GradeForm(obj=grade)
-#     if form.validate_on_submit():
-#         grade.paygrade = form.paygrade.data
-#         grade.amount = form.amount.data
-#         db.session.add(grade)
-#         db.session.commit()
-#         flash('You have successfully edited the Pay Grade.')
-
-#         # redirect to the roles page
-#         return redirect(url_for('hr.list_grades'))
-
-#     form.amount.data = grade.amount
-#     form.paygrade.data = grade.paygrade
-#     return render_template('hr/grades/grade.html', add_grade=add_grade,
-#                            form=form, title="Edit Pay Grade")
-
-
-# @hr.route('/grades/delete/<int:id>', methods=['GET', 'POST'])
-# @oidc.require_login
-# def delete_grade(id):
-#     """
-#     Delete a pay grade from the database
-#     """
-    
-
-#     grade = Grade.query.get_or_404(id)
-#     db.session.delete(grade)
-#     db.session.commit()
-#     flash('You have successfully deleted the pay grade.')
-
-#     # redirect to the roles page
-#     return redirect(url_for('hr.list_grades'))
-
-#     return render_template(title="Delete Pay Grade")
+ 
