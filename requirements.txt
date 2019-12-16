@@ -18,7 +18,6 @@ Flask==1.1.1
 Flask-Bootstrap==3.3.7.1
 Flask-Login==0.4.1
 Flask-Migrate==2.5.2
--e git+https://github.com/manmeet3/cmpe272_PeoplePlus.git@a55ca1995f15aa190e908447525a3c75de16531a#egg=flask_oidc&subdirectory=packages/flask-oidc
 flask-paginate==0.5.5
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.1
