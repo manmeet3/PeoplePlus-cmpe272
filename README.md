@@ -25,7 +25,7 @@ Based on Scotch.io's [Tutorial](https://scotch.io/tutorials/build-a-crud-web-app
 ![DB LMS](https://raw.githubusercontent.com/manmeet3/PeoplePlus-cmpe272/master/artifacts/lms-db-design.png)
 
 ### Running the App
-export FLASK_CONFIG='development'
-export FLASK_APP=app/__init__.py
-export FLASK_APP=run.py
-flask run -h localhost -p 3000
+export FLASK_CONFIG='development'  
+export FLASK_APP=app/__init__.py  
+export FLASK_APP=run.py  
+flask run -h localhost -p 3000  
