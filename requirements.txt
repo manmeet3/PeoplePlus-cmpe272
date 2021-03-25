@@ -58,7 +58,7 @@ python-dateutil==2.8.1
 python-editor==1.0.4
 python-jose==3.0.1
 python-keycloak==0.17.6
-PyYAML==5.2
+PyYAML==5.4
 requests==2.21.0
 rsa==4.0
 six==1.13.0
